@@ -116,20 +116,20 @@ function renderFileList() {
       </div>
       <div class="file-actions">
         ${index > 0 ? `
-          <button class="btn-icon" onclick="moveFile(${index}, -1)" title="Move Up">
+          <button class="btn-icon btn-move-up" data-index="${index}" title="Move Up">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="18 15 12 9 6 15"></polyline>
             </svg>
           </button>
         ` : ''}
         ${index < inputFiles.length - 1 ? `
-          <button class="btn-icon" onclick="moveFile(${index}, 1)" title="Move Down">
+          <button class="btn-icon btn-move-down" data-index="${index}" title="Move Down">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
           </button>
         ` : ''}
-        <button class="btn-icon" onclick="removeFile(${index})" title="Remove">
+        <button class="btn-icon btn-remove" data-index="${index}" title="Remove">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="3 6 5 6 21 6"></polyline>
             <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -149,20 +149,37 @@ function updateTotalChannels() {
   totalChannelsSpan.textContent = total;
 }
 
+// Event delegation for file list buttons
+fileList.addEventListener('click', (e) => {
+  const button = e.target.closest('button');
+  if (!button) return;
+
+  const index = parseInt(button.dataset.index);
+  if (isNaN(index)) return;
+
+  if (button.classList.contains('btn-move-up')) {
+    moveFile(index, -1);
+  } else if (button.classList.contains('btn-move-down')) {
+    moveFile(index, 1);
+  } else if (button.classList.contains('btn-remove')) {
+    removeFile(index);
+  }
+});
+
 // Move file in list
-window.moveFile = function(index, direction) {
+function moveFile(index, direction) {
   const newIndex = index + direction;
   if (newIndex >= 0 && newIndex < inputFiles.length) {
     [inputFiles[index], inputFiles[newIndex]] = [inputFiles[newIndex], inputFiles[index]];
     updateUI();
   }
-};
+}
 
 // Remove file from list
-window.removeFile = function(index) {
+function removeFile(index) {
   inputFiles.splice(index, 1);
   updateUI();
-};
+}
 
 // Select output location
 selectOutputBtn.addEventListener('click', async () => {
