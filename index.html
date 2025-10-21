@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  <title>BWF Wave Combiner</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <header>
+      <h1>BWF Wave Combiner</h1>
+      <p class="subtitle">Combine multiple WAV files into one multichannel file</p>
+    </header>
+
+    <main>
+      <section class="drop-zone" id="dropZone">
+        <div class="drop-zone-content">
+          <svg class="drop-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          <p class="drop-text">Drag & Drop WAV files here</p>
+          <p class="drop-subtext">or</p>
+          <button id="selectFilesBtn" class="btn-primary">Select Files</button>
+        </div>
+      </section>
+
+      <section class="file-list-section" id="fileListSection" style="display: none;">
+        <div class="section-header">
+          <h2>Input Files</h2>
+          <div class="total-channels">
+            Total Channels: <span id="totalChannels">0</span>
+          </div>
+        </div>
+        <div id="fileList" class="file-list"></div>
+        <button id="addMoreBtn" class="btn-secondary">Add More Files</button>
+      </section>
+
+      <section class="output-section" id="outputSection" style="display: none;">
+        <h2>Output Settings</h2>
+        <div class="output-controls">
+          <div class="output-path-group">
+            <label>Output File:</label>
+            <div class="path-input-group">
+              <input type="text" id="outputPath" placeholder="Choose output location..." readonly>
+              <button id="selectOutputBtn" class="btn-secondary">Browse</button>
+            </div>
+          </div>
+        </div>
+        <button id="combineBtn" class="btn-primary btn-large" disabled>Combine Files</button>
+      </section>
+
+      <section class="progress-section" id="progressSection" style="display: none;">
+        <h2>Processing</h2>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <p class="progress-text" id="progressText">Starting...</p>
+      </section>
+
+      <section class="result-section" id="resultSection" style="display: none;">
+        <div class="result-success">
+          <svg class="result-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+          <h2>Success!</h2>
+          <p id="resultMessage">Your file has been created</p>
+          <button id="newJobBtn" class="btn-primary">Start New Job</button>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="renderer.js"></script>
+</body>
+</html>
