@@ -45,7 +45,15 @@ app.on('window-all-closed', () => {
 function getFFmpegPath() {
   try {
     const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
-    return ffmpegInstaller.path;
+    let ffmpegPath = ffmpegInstaller.path;
+
+    // In packaged app, replace .asar with .asar.unpacked
+    if (ffmpegPath.includes('app.asar')) {
+      ffmpegPath = ffmpegPath.replace('app.asar', 'app.asar.unpacked');
+    }
+
+    console.log('FFmpeg path:', ffmpegPath);
+    return ffmpegPath;
   } catch (error) {
     console.error('FFmpeg not found:', error);
     return null;
@@ -56,7 +64,15 @@ function getFFmpegPath() {
 function getFFprobePath() {
   try {
     const ffprobeInstaller = require('@ffprobe-installer/ffprobe');
-    return ffprobeInstaller.path;
+    let ffprobePath = ffprobeInstaller.path;
+
+    // In packaged app, replace .asar with .asar.unpacked
+    if (ffprobePath.includes('app.asar')) {
+      ffprobePath = ffprobePath.replace('app.asar', 'app.asar.unpacked');
+    }
+
+    console.log('FFprobe path:', ffprobePath);
+    return ffprobePath;
   } catch (error) {
     console.error('FFprobe not found:', error);
     return null;

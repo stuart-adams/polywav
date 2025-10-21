@@ -1,20 +1,67 @@
 {
-  "name": "electron-app",
+  "name": "bwf-wave-combiner",
+  "productName": "BWF Wave Combiner",
   "version": "1.0.0",
-  "description": "A modern Electron desktop application",
+  "description": "A desktop application for combining WAV files using FFmpeg",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dev": "NODE_ENV=development electron ."
+    "dev": "NODE_ENV=development electron .",
+    "build": "electron-builder",
+    "build:mac": "electron-builder --mac",
+    "build:win": "electron-builder --win",
+    "build:linux": "electron-builder --linux"
   },
-  "keywords": [],
+  "keywords": ["audio", "wav", "ffmpeg", "combiner"],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^38.3.0"
+    "electron": "^38.3.0",
+    "electron-builder": "^26.0.12"
   },
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@ffprobe-installer/ffprobe": "^2.1.2"
+  },
+  "build": {
+    "appId": "com.bwfwavecombiner.app",
+    "productName": "BWF Wave Combiner",
+    "files": [
+      "**/*",
+      "!**/*.md",
+      "!.git",
+      "!.gitignore"
+    ],
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Audio"
+    },
+    "directories": {
+      "output": "dist"
+    },
+    "asarUnpack": [
+      "node_modules/@ffmpeg-installer/**/*",
+      "node_modules/@ffprobe-installer/**/*"
+    ]
   }
 }
