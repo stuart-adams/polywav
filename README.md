@@ -1,4 +1,4 @@
-# BWF Wave Combiner
+# PolyWav
 
 A professional Electron application for combining multiple WAV files into a single multichannel BWF (Broadcast Wave Format) file.
 
@@ -51,7 +51,7 @@ npm run dev
 ## Project Structure
 
 ```
-electron-app/
+polywav/
 ├── main.js           # Main process - FFmpeg integration & IPC handlers
 ├── preload.js        # Secure bridge for renderer-main communication
 ├── renderer.js       # UI logic and file management
