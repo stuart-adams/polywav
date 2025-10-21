@@ -12,7 +12,7 @@ body {
 }
 
 .app-container {
-  max-width: 900px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 2rem;
   min-height: 100vh;
@@ -157,60 +157,90 @@ section {
   margin-bottom: 1.5rem;
 }
 
+/* Table Header */
+.file-table-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.2fr 1fr 0.8fr 1.5fr;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: #2d3748;
+  color: white;
+  border-radius: 8px 8px 0 0;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* File Item (Table Row) */
 .file-item {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.2fr 1fr 0.8fr 1.5fr;
+  gap: 1rem;
   background: #f7fafc;
   border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  border-top: none;
   padding: 1rem;
-  margin-bottom: 0.75rem;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
   transition: all 0.2s ease;
 }
 
+.file-item:last-child {
+  border-radius: 0 0 8px 8px;
+}
+
 .file-item:hover {
-  border-color: #cbd5e0;
   background: #edf2f7;
 }
 
-.file-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.file-name {
+/* Column Styles */
+.col-filename {
   font-weight: 600;
   color: #2d3748;
-  margin-bottom: 0.25rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-width: 0;
 }
 
-.file-details {
-  font-size: 0.85rem;
-  color: #718096;
+.col-duration,
+.col-samplerate,
+.col-bitdepth {
+  color: #4a5568;
+  font-size: 0.9rem;
+  text-align: center;
 }
 
-.file-channels {
+.col-channels {
   background: #764ba2;
   color: white;
-  padding: 0.4rem 0.8rem;
+  padding: 0.4rem 0.6rem;
   border-radius: 6px;
   font-weight: 600;
   font-size: 0.9rem;
-  margin-right: 0.5rem;
+  text-align: center;
+  justify-self: center;
+  min-width: 50px;
 }
 
-.file-channels.loading {
+.col-channels.loading {
   background: #cbd5e0;
   color: #718096;
 }
 
-.file-actions {
+.col-actions {
   display: flex;
   gap: 0.5rem;
+  justify-content: center;
+}
+
+/* Table header column alignment */
+.file-table-header .col-duration,
+.file-table-header .col-samplerate,
+.file-table-header .col-bitdepth,
+.file-table-header .col-channels,
+.file-table-header .col-actions {
+  text-align: center;
 }
 
 .btn-icon {

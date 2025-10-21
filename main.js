@@ -88,6 +88,7 @@ function setupIpcHandlers() {
         channels: null,
         duration: null,
         sampleRate: null,
+        bitDepth: null,
         error: 'FFprobe not found'
       };
     }
@@ -95,7 +96,7 @@ function setupIpcHandlers() {
     return new Promise((resolve) => {
       const args = [
         '-v', 'error',
-        '-show_entries', 'stream=channels,sample_rate,duration',
+        '-show_entries', 'stream=channels,sample_rate,duration,bits_per_sample,bits_per_raw_sample',
         '-of', 'json',
         filePath
       ];
@@ -123,10 +124,14 @@ function setupIpcHandlers() {
                 ? formatDuration(parseFloat(audioStream.duration))
                 : null;
 
+              // Get bit depth - try bits_per_sample first, fall back to bits_per_raw_sample
+              const bitDepth = audioStream.bits_per_sample || audioStream.bits_per_raw_sample || null;
+
               resolve({
                 name: path.basename(filePath),
                 channels: audioStream.channels,
-                sampleRate: audioStream.sample_rate ? `${audioStream.sample_rate}` : null,
+                sampleRate: audioStream.sample_rate ? parseInt(audioStream.sample_rate) : null,
+                bitDepth: bitDepth,
                 duration: duration
               });
             } else {
@@ -135,6 +140,7 @@ function setupIpcHandlers() {
                 channels: null,
                 duration: null,
                 sampleRate: null,
+                bitDepth: null,
                 error: 'No audio stream found'
               });
             }
@@ -144,6 +150,7 @@ function setupIpcHandlers() {
               channels: null,
               duration: null,
               sampleRate: null,
+              bitDepth: null,
               error: error.message
             });
           }
@@ -153,6 +160,7 @@ function setupIpcHandlers() {
             channels: null,
             duration: null,
             sampleRate: null,
+            bitDepth: null,
             error: errorOutput || `FFprobe exited with code ${code}`
           });
         }

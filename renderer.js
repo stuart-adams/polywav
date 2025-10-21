@@ -73,7 +73,8 @@ async function addFiles(files) {
       name: fileInfo.name,
       channels: fileInfo.channels,
       duration: fileInfo.duration,
-      sampleRate: fileInfo.sampleRate
+      sampleRate: fileInfo.sampleRate,
+      bitDepth: fileInfo.bitDepth
     });
   }
 
@@ -100,21 +101,37 @@ function updateUI() {
 function renderFileList() {
   fileList.innerHTML = '';
 
+  // Add table header
+  const headerRow = document.createElement('div');
+  headerRow.className = 'file-table-header';
+  headerRow.innerHTML = `
+    <div class="col-filename">Filename</div>
+    <div class="col-duration">Duration</div>
+    <div class="col-samplerate">Sample Rate</div>
+    <div class="col-bitdepth">Bit Depth</div>
+    <div class="col-channels">Channels</div>
+    <div class="col-actions">Actions</div>
+  `;
+  fileList.appendChild(headerRow);
+
+  // Add file rows
   inputFiles.forEach((file, index) => {
     const fileItem = document.createElement('div');
     fileItem.className = 'file-item';
+
+    // Format the data values
+    const duration = file.duration || '—';
+    const sampleRate = file.sampleRate ? `${(file.sampleRate / 1000).toFixed(1)} kHz` : '—';
+    const bitDepth = file.bitDepth ? `${file.bitDepth}-bit` : '—';
+    const channels = file.channels !== null ? file.channels : '...';
+
     fileItem.innerHTML = `
-      <div class="file-info">
-        <div class="file-name" title="${file.name}">${file.name}</div>
-        <div class="file-details">
-          ${file.sampleRate ? `${file.sampleRate} Hz` : ''}
-          ${file.duration ? `• ${file.duration}` : ''}
-        </div>
-      </div>
-      <div class="file-channels ${file.channels === null ? 'loading' : ''}">
-        ${file.channels !== null ? `${file.channels} ch` : 'Loading...'}
-      </div>
-      <div class="file-actions">
+      <div class="col-filename" title="${file.name}">${file.name}</div>
+      <div class="col-duration">${duration}</div>
+      <div class="col-samplerate">${sampleRate}</div>
+      <div class="col-bitdepth">${bitDepth}</div>
+      <div class="col-channels ${file.channels === null ? 'loading' : ''}">${channels}</div>
+      <div class="col-actions">
         ${index > 0 ? `
           <button class="btn-icon" onclick="moveFile(${index}, -1)" title="Move Up">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
