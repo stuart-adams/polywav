@@ -1,6 +1,6 @@
 {
-  "name": "bwf-wave-combiner",
-  "productName": "BWF Wave Combiner",
+  "name": "polywav",
+  "productName": "PolyWav",
   "version": "1.0.0",
   "description": "A desktop application for combining WAV files using FFmpeg",
   "main": "main.js",
@@ -24,8 +24,8 @@
     "@ffprobe-installer/ffprobe": "^2.1.2"
   },
   "build": {
-    "appId": "com.bwfwavecombiner.app",
-    "productName": "BWF Wave Combiner",
+    "appId": "com.polywav.app",
+    "productName": "PolyWav",
     "files": [
       "**/*",
       "!**/*.md",

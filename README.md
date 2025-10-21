@@ -1,4 +1,4 @@
-# BWF Wave Combiner
+# PolyWav
 
 A professional Electron application for combining multiple WAV files into a single multichannel BWF (Broadcast Wave Format) file.
 
